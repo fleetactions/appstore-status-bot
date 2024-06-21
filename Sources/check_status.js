@@ -61,12 +61,14 @@ const checkVersion = async (app) => {
             const oldBuildInfo = lastBuildInfo[buildInfo.version]
             if (!oldBuildInfo) {
                 // poster.slackBuild(app, buildInfo)
+                slack.postBuild(app, buildInfo)
                 newBuildInfo[buildInfo.version] = buildInfo
             } else if (oldBuildInfo.status != buildInfo.status) {
                 // poster.slackBuild(app, buildInfo)
+                slack.postBuild(app, buildInfo)
                 newBuildInfo[buildInfo.version] = buildInfo
             } else {
-                console.log("No build change detected.")
+                console.log("[*] No build change detected.")
             }
         })
 
