@@ -2,8 +2,8 @@ name: Fetch Appstore Info
 
 on:
   workflow_dispatch:
-  # schedule:
-  #   - cron: "0/15 * * * *"
+  schedule:
+    - cron: "0 * * * *"
 
 jobs:
   build:
@@ -31,4 +31,13 @@ jobs:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
           GIST_ID: ${{ secrets.GIST_ID }}
-          # LANGUAGE: "ko"
+          
+      - run: node Sources/check_status.js for RideMinder
+        env:
+          PRIVATE_KEY: ${{ secrets.RM_PRIVATE_KEY }}
+          KEY_ID: ${{ secrets.RM_KEY_ID }}
+          ISSUER_ID: ${{ secrets.RM_ISSUER_ID }}
+          BUNDLE_ID: ${{ secrets.RM_BUNDLE_ID }}
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GIST_ID: ${{ secrets.GIST_ID }}
