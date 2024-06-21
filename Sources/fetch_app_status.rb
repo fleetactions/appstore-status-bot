@@ -2,6 +2,10 @@ require "spaceship"
 require "json"
 require 'tempfile'
 
+def number_of_builds
+  (ENV["NUMBER_OF_BUILDS"] || 1).to_i
+end
+
 def get_app_state(app)
   
   edit_version_info = app.get_edit_app_store_version
@@ -45,6 +49,24 @@ def get_app_state(app)
   
 end
 
+def get_build_info(app)
+  builds = app.get_builds.sort_by(&:uploaded_date).reverse[0, number_of_builds]
+
+  builds.map do |build|
+    {
+      version: build.version,
+      uploaded_data: build.uploaded_date,
+      status: build.processing_state,
+    }
+  end
+end
+
+def get_app_state_with_builds(app)
+  app_info = get_app_state(app)
+  app_info["builds"] = get_build_info(app)
+  app_info
+end
+
 def get_app_version_from(bundle_id) 
   apps = []
   if bundle_id
@@ -52,7 +74,7 @@ def get_app_version_from(bundle_id)
   else 
     apps = Spaceship::ConnectAPI::App.all
   end 
-  apps.compact.map { |app| get_app_state(app) }
+  apps.compact.map { |app| get_app_state_with_builds(app) }
 end 
 
 
