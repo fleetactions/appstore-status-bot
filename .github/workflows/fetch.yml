@@ -41,3 +41,23 @@ jobs:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
           GIST_ID: ${{ secrets.GIST_ID }}
+
+      - run: node Sources/check_status.js for Royale
+        env:
+          PRIVATE_KEY: ${{ secrets.ROYALE_PRIVATE_KEY }}
+          KEY_ID: ${{ secrets.ROYALE_KEY_ID }}
+          ISSUER_ID: ${{ secrets.ROYALE_ISSUER_ID }}
+          BUNDLE_ID: ${{ secrets.ROYALE_BUNDLE_ID }}
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GIST_ID: ${{ secrets.GIST_ID }}
+
+      - run: node Sources/check_status.js for Encore
+        env:
+          PRIVATE_KEY: ${{ secrets.ENCORE_PRIVATE_KEY }}
+          KEY_ID: ${{ secrets.ENCORE_KEY_ID }}
+          ISSUER_ID: ${{ secrets.ENCORE_ISSUER_ID }}
+          BUNDLE_ID: ${{ secrets.ENCORE_BUNDLE_ID }}
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GIST_ID: ${{ secrets.GIST_ID }}

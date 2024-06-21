@@ -53,7 +53,6 @@ const checkVersion = async (app) => {
     db.set(appInfoKey, app);
 
     const buildChange = lastAppInfo && JSON.stringify(lastAppInfo.builds) != JSON.stringify(app.builds)
-      console.log("[*]", JSON.stringify(lastAppInfo), JSON.stringify(app.builds));
     if (lastAppInfo && buildChange) {
         const builds = app.builds
         const newBuildInfo = {}
