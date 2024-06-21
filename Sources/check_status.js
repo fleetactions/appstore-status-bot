@@ -31,6 +31,7 @@ const main = async () => {
 
 const checkVersion = async (app) => {
   var appInfoKey = "appInfo-" + app.appID;
+  var buildInfoKey = "builds-appInfo-" + app.appId
   var submissionStartKey = "submissionStart" + app.appID;
 
   const db = dirty("store.db");
