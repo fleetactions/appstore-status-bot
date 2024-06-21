@@ -7,6 +7,10 @@ const webhookURL = process.env.SLACK_WEBHOOK;
 const language = process.env.LANGUAGE;
 const i18n = new I18n();
 
+String.prototype.formatted = function() {
+    return this.replace(/_/g, " ").replace(/(^\w|\s\w)(\S*)/g, (_,m1,m2) => m1.toUpperCase()+m2.toLowerCase())
+}
+
 i18n.configure({
   locales: ['en','ko', 'ja'],
   directory: path.join(__dirname, '../locales'),
