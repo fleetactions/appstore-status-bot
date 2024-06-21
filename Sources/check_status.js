@@ -36,6 +36,8 @@ const checkVersion = async (app) => {
   const db = dirty("store.db");
   db.on("load", async function () {
     var lastAppInfo = db.get(appInfoKey);
+    var lastBuildInfo = db.get(buildInfoKey) || {}
+
     if (!lastAppInfo || lastAppInfo.status != app.status) {
       console.log("[*] status is different");
       slack.post(app, db.get(submissionStartKey));
@@ -48,6 +50,28 @@ const checkVersion = async (app) => {
     }
 
     db.set(appInfoKey, app);
+
+    const buildChange = lastAppInfo && JSON.stringify(lastAppInfo.builds) != JSON.stringify(app.builds)
+    if (lastAppInfo && buildChange) {
+        const builds = app.builds
+        const newBuildInfo = {}
+
+        builds.forEach((buildInfo) => {
+            const oldBuildInfo = lastBuildInfo[buildInfo.version]
+            if (!oldBuildInfo) {
+                // poster.slackBuild(app, buildInfo)
+                newBuildInfo[buildInfo.version] = buildInfo
+            } else if (oldBuildInfo.status != buildInfo.status) {
+                // poster.slackBuild(app, buildInfo)
+                newBuildInfo[buildInfo.version] = buildInfo
+            } else {
+                console.log("No build change detected.")
+            }
+        })
+
+        // Store latest build info in database
+        db.set(buildInfoKey, newBuildInfo)
+    }
 
     try {
       const data = await fs.readFile("store.db", "utf-8");

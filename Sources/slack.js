@@ -28,6 +28,20 @@ function post(appInfo, submissionStartDate) {
   hook(message, attachment);
 }
 
+function postBuild(appInfo, buildInfo) {
+  // const status = i18n.__(appInfo.status);
+  // const message = i18n.__("Message", { appname: appInfo.name, status: status });
+  const message = `The status of build version *${buildInfo.version}* for your app *${appInfo.name}* has been changed to *${buildInfo.status}*`
+  const attachment = slackAttachmentBuild(message, appInfo, buildInfo);
+
+  const params = {
+    attachments: [attachment],
+    as_user: "true",
+  };
+
+  hook(message, attachment);
+}
+
 async function hook(message, attachment) {
   const webhook = new IncomingWebhook(webhookURL, {});
   await webhook.send({
@@ -78,6 +92,45 @@ function slackAttachment(appInfo, submissionStartDate) {
   return attachment;
 }
 
+function slackAttachmentBuild(fallback, appInfo, buildInfo) {
+    const attachment = {
+        fallback,
+        "color": colorForStatus(buildInfo.status),
+        "title": "App Store Connect",
+        "author_name": appInfo.name,
+        "author_icon": appInfo.iconUrl,
+        "title_link": `https://appstoreconnect.apple.com/apps/${appInfo.appId}/appstore`,
+        "fields": [
+            {
+                "title": "Build Version",
+                "value": buildInfo.version,
+                "short": true
+            },
+            {
+                "title": "Build Status",
+                "value": buildInfo.status,
+                "short": true
+            },
+            {
+                "title": "Version",
+                "value": appInfo.version,
+                "short": true
+            },
+            {
+                "title": "App Status",
+                "value": appInfo.status.formatted(),
+                "short": true
+            }
+        ],
+        "footer": "App Store Connect",
+        "footer_icon": "https://devimages.apple.com.edgekey.net/app-store/marketing/guidelines/images/app-store-icon.png",
+        "ts": new Date().getTime() / 1000
+    }
+
+    return attachment
+}
+
+
 function colorForStatus(status) {
   const infoColor = "#8e8e8e";
   const warningColor = "#f4f124";
@@ -107,4 +160,5 @@ function colorForStatus(status) {
 
 module.exports = {
   post: post,
+  postBuild: postBuild,
 };
