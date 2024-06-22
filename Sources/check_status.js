@@ -31,7 +31,7 @@ const main = async () => {
 
 const checkVersion = async (app) => {
   var appInfoKey = "appInfo-" + app.appID;
-  var buildInfoKey = "builds-appInfo-" + app.appID
+  var buildInfoKey = "builds-appInfo-" + app.appID;
   var submissionStartKey = "submissionStart" + app.appID;
 
   const db = dirty("store.db");
@@ -53,6 +53,8 @@ const checkVersion = async (app) => {
     db.set(appInfoKey, app);
 
     const buildChange = lastAppInfo && JSON.stringify(lastAppInfo.builds) != JSON.stringify(app.builds)
+    console.log('[*] last app info', JSON.stringify(lastAppInfo))
+    console.log('[*] current app info', JSON.stringify(app))
     if (lastAppInfo && buildChange) {
         const builds = app.builds
         const newBuildInfo = {}
@@ -62,12 +64,12 @@ const checkVersion = async (app) => {
             if (!oldBuildInfo) {
                console.log("[*] no builds");
                 // poster.slackBuild(app, buildInfo)
-                slack.postBuild(app, buildInfo)
+                slack.postBuild(app, buildInfo);
                 newBuildInfo[buildInfo.version] = buildInfo
             } else if (oldBuildInfo.status != buildInfo.status) {
                console.log("[*] status is different");
                 // poster.slackBuild(app, buildInfo)
-                slack.postBuild(app, buildInfo)
+                slack.postBuild(app, buildInfo);
                 newBuildInfo[buildInfo.version] = buildInfo
             } else {
                 console.log("[*] No build change detected.")
