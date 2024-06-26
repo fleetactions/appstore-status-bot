@@ -103,7 +103,7 @@ function slackAttachmentBuild(fallback, appInfo, buildInfo) {
         "title": "App Store Connect",
         "author_name": appInfo.name,
         "author_icon": appInfo.iconUrl,
-        "title_link": `https://appstoreconnect.apple.com/apps/${appInfo.appId}/appstore`,
+        "title_link": `https://appstoreconnect.apple.com/apps/${appInfo.appID}/appstore`,
         "fields": [
             {
                 "title": "Build Version",
