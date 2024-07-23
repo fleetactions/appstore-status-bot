@@ -115,18 +115,18 @@ function slackAttachmentBuild(fallback, appInfo, buildInfo) {
                 "value": buildInfo.status,
                 "short": true
             },
-            {
-                "title": "Version",
-                "value": appInfo.version,
-                "short": true
-            },
-            {
-                "title": "App Status",
-                "value": appInfo.status.formatted(),
-                "short": true
-            }
+            // {
+            //     "title": "Version",
+            //     "value": appInfo.version,
+            //     "short": true
+            // },
+            // {
+            //     "title": "App Status",
+            //     "value": appInfo.status.formatted(),
+            //     "short": true
+            // }
         ],
-        "footer": "App Store Connect",
+        "footer": "appstore-status-bot",
         "footer_icon": "https://devimages.apple.com.edgekey.net/app-store/marketing/guidelines/images/app-store-icon.png",
         "ts": new Date().getTime() / 1000
     }
