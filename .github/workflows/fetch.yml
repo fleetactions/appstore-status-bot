@@ -18,10 +18,11 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: "2.6"
-      - run: gem install bundler
+      # - run: gem install bundler
       - run: bundle install
       - run: npm install
-      - run: gem install fastlane
+      # - run: gem install fastlane
+      - run: bundle update fastlane
       - run: node Sources/check_status.js
         env:
           PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
