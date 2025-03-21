@@ -53,12 +53,22 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
           GIST_ID: ${{ secrets.GIST_ID }}
 
-      - run: node Sources/check_status.js for Encore
+      # - run: node Sources/check_status.js for Encore
+      #   env:
+      #     PRIVATE_KEY: ${{ secrets.ENCORE_PRIVATE_KEY }}
+      #     KEY_ID: ${{ secrets.ENCORE_KEY_ID }}
+      #     ISSUER_ID: ${{ secrets.ENCORE_ISSUER_ID }}
+      #     BUNDLE_ID: ${{ secrets.ENCORE_BUNDLE_ID }}
+      #     SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+      #     GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      #     GIST_ID: ${{ secrets.GIST_ID }}
+
+      - run: node Sources/check_status.js for Limousines Australia
         env:
-          PRIVATE_KEY: ${{ secrets.ENCORE_PRIVATE_KEY }}
-          KEY_ID: ${{ secrets.ENCORE_KEY_ID }}
-          ISSUER_ID: ${{ secrets.ENCORE_ISSUER_ID }}
-          BUNDLE_ID: ${{ secrets.ENCORE_BUNDLE_ID }}
+          PRIVATE_KEY: ${{ secrets.LIMOAUSTRALIA_PRIVATE_KEY }}
+          KEY_ID: ${{ secrets.LIMOAUSTRALIA_KEY_ID }}
+          ISSUER_ID: ${{ secrets.LIMOAUSTRALIA_ISSUER_ID }}
+          BUNDLE_ID: ${{ secrets.LIMOAUSTRALIA_BUNDLE_ID }}
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
           GIST_ID: ${{ secrets.GIST_ID }}
